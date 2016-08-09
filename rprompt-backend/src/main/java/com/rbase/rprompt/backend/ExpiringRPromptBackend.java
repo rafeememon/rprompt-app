@@ -1,7 +1,6 @@
-package com.rbase.rprompt;
+package com.rbase.rprompt.backend;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import com.google.common.cache.Cache;
@@ -16,10 +15,9 @@ public class ExpiringRPromptBackend {
         // utility class
     }
 
-    public static RPromptBackend create(long duration, TimeUnit unit) {
+    public static RPromptBackend create(ScheduledExecutorService executor, long duration, TimeUnit unit) {
         Cache<String, Connection> cache = createConnectionCache(duration, unit);
-        Executors.newSingleThreadScheduledExecutor(new DaemonThreadFactory())
-                .scheduleAtFixedRate(new CacheCleaner<>(cache), duration, duration, unit);
+        executor.scheduleAtFixedRate(new CacheCleaner<>(cache), duration, duration, unit);
         return new DefaultRPromptBackend(cache.asMap());
     }
 
@@ -35,15 +33,6 @@ public class ExpiringRPromptBackend {
                     }
                 })
                 .build();
-    }
-
-    private static class DaemonThreadFactory implements ThreadFactory {
-        @Override
-        public Thread newThread(Runnable runnable) {
-            Thread thread = Executors.defaultThreadFactory().newThread(runnable);
-            thread.setDaemon(true);
-            return thread;
-        }
     }
 
     private static class CacheCleaner<K, V> implements Runnable {

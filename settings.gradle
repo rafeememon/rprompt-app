@@ -1,2 +1,3 @@
 include 'rprompt-api'
+include 'rprompt-app'
 include 'rprompt-backend'

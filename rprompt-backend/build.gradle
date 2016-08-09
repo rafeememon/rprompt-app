@@ -8,7 +8,6 @@ repositories {
 
 dependencies {
   compile project(':rprompt-api')
-  compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
   compile group: 'org.bytedeco', name: 'javacpp', version: javacppVersion
   compile name: 'nanodbc-x64'
 

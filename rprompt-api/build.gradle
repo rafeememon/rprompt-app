@@ -1,1 +1,5 @@
 apply from: '../gradle/java.gradle'
+
+dependencies {
+  compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
+}

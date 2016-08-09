@@ -1,4 +1,4 @@
-package com.rbase.rprompt;
+package com.rbase.rprompt.backend;
 
 import java.util.List;
 
