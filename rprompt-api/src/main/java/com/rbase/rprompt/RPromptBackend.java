@@ -1,6 +1,6 @@
 package com.rbase.rprompt;
 
-public interface RPromptService {
+public interface RPromptBackend {
 
     String connect(String dsn);
 

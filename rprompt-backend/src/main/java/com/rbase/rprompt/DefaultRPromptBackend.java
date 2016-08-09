@@ -9,7 +9,7 @@ import com.lexicalunit.nanodbc.Connection;
 import com.lexicalunit.nanodbc.Nanodbc;
 import com.lexicalunit.nanodbc.Result;
 
-public class DefaultRPromptService implements RPromptService {
+public class DefaultRPromptBackend implements RPromptBackend {
 
     private static final long CONNECT_TIMEOUT_SECONDS = 10;
     private static final long EXECUTE_TIMEOUT_SECONDS = 30;
@@ -17,7 +17,7 @@ public class DefaultRPromptService implements RPromptService {
 
     private final Map<String, Connection> connections;
 
-    public DefaultRPromptService(Map<String, Connection> connections) {
+    public DefaultRPromptBackend(Map<String, Connection> connections) {
         this.connections = connections;
     }
 

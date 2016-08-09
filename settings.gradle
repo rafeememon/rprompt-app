@@ -1,2 +1,2 @@
 include 'rprompt-api'
-include 'rprompt-impl'
+include 'rprompt-backend'

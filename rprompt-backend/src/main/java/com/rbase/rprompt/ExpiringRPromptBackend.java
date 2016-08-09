@@ -10,17 +10,17 @@ import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
 import com.lexicalunit.nanodbc.Connection;
 
-public class ExpiringRPromptService {
+public class ExpiringRPromptBackend {
 
-    private ExpiringRPromptService() {
+    private ExpiringRPromptBackend() {
         // utility class
     }
 
-    public static RPromptService create(long duration, TimeUnit unit) {
+    public static RPromptBackend create(long duration, TimeUnit unit) {
         Cache<String, Connection> cache = createConnectionCache(duration, unit);
         Executors.newSingleThreadScheduledExecutor(new DaemonThreadFactory())
                 .scheduleAtFixedRate(new CacheCleaner<>(cache), duration, duration, unit);
-        return new DefaultRPromptService(cache.asMap());
+        return new DefaultRPromptBackend(cache.asMap());
     }
 
     private static Cache<String, Connection> createConnectionCache(long duration, TimeUnit unit) {
