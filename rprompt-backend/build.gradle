@@ -1,11 +1,5 @@
 apply from: '../gradle/java.gradle'
 
-repositories {
-  flatDir {
-    dirs 'lib'
-  }
-}
-
 dependencies {
   compile project(':rprompt-api')
   compile group: 'org.bytedeco', name: 'javacpp', version: javacppVersion
