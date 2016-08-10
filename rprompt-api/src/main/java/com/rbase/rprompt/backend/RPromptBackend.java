@@ -6,6 +6,8 @@ public interface RPromptBackend {
 
     void disconnect(String connectionId);
 
+    boolean connected(String connectionId);
+
     RPromptResult execute(String connectionId, String query);
 
 }

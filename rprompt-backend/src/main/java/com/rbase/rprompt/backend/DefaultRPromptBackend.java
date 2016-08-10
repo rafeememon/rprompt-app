@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.annotation.CheckForNull;
+
 import com.lexicalunit.nanodbc.Connection;
 import com.lexicalunit.nanodbc.Nanodbc;
 import com.lexicalunit.nanodbc.Result;
@@ -38,16 +40,31 @@ public class DefaultRPromptBackend implements RPromptBackend {
     }
 
     @Override
+    public boolean connected(String connectionId) {
+        return getConnectedConnection(connectionId) != null;
+    }
+
+    @Override
     public RPromptResult execute(String connectionId, String query) {
-        Connection connection = connections.get(connectionId);
+        Connection connection = getConnectedConnection(connectionId);
         if (connection == null) {
-            throw new NotConnectedException(connectionId);
-        } else if (!connection.connected()) {
-            connections.remove(connectionId);
             throw new NotConnectedException(connectionId);
         }
         try (Result result = connection.execute(query, EXECUTE_BATCH_OPERATIONS, EXECUTE_TIMEOUT_SECONDS)) {
             return new RPromptResult(getColumns(result), getValues(result));
+        }
+    }
+
+    @CheckForNull
+    private Connection getConnectedConnection(String connectionId) {
+        Connection connection = connections.get(connectionId);
+        if (connection == null) {
+            return null;
+        } else if (!connection.connected()) {
+            connections.remove(connectionId);
+            return null;
+        } else {
+            return connection;
         }
     }
 

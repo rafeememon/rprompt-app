@@ -57,6 +57,18 @@ public class DefaultRPromptBackendTest {
     }
 
     @Test
+    public void testConnected() {
+        Connection connection = getNewConnection();
+        RPromptBackend service = new DefaultRPromptBackend(connections);
+        Assert.assertFalse("connection is disconnected", service.connected(CONNECTION_ID));
+        connections.put(CONNECTION_ID, connection);
+        Assert.assertTrue("connection is connected", service.connected(CONNECTION_ID));
+        connection.disconnect();
+        Assert.assertFalse("connection is disconnected", service.connected(CONNECTION_ID));
+        Assert.assertFalse("connection is removed", connections.containsKey(CONNECTION_ID));
+    }
+
+    @Test
     public void testExecute() {
         connections.put(CONNECTION_ID, getNewConnection());
         RPromptBackend service = new DefaultRPromptBackend(connections);
