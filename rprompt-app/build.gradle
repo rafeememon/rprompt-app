@@ -3,3 +3,8 @@ apply from: '../gradle/java.gradle'
 dependencies {
   compile project(':rprompt-backend')
 }
+
+task run(type: JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'com.rbase.rprompt.dropwizard.RPromptApplication'
+}
