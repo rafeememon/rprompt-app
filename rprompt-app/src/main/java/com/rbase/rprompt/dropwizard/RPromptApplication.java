@@ -22,6 +22,7 @@ public class RPromptApplication extends Application<RPromptApplicationConfigurat
     @Override
     public void initialize(Bootstrap<RPromptApplicationConfiguration> bootstrap) {
         bootstrap.addBundle(new RPromptBackendBundle());
+        bootstrap.addBundle(new RPromptFrontendBundle());
     }
 
     @Override

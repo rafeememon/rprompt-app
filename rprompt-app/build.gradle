@@ -2,6 +2,7 @@ apply from: '../gradle/java.gradle'
 
 dependencies {
   compile project(':rprompt-backend')
+  compile project(':rprompt-frontend')
 }
 
 task run(type: JavaExec) {
